@@ -10,7 +10,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, byte avatar) {}
+    public User(String name, Privilege permission, String e_mail, String password, byte[] avatar, Date registration_date) {}
 
     @Setter
     @Getter
@@ -18,7 +18,7 @@ public class User {
 
     @Setter
     @Getter
-    public Privilege privilege;
+    public Privilege permission;
 
     @Setter
     @Getter
