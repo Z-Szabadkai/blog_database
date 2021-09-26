@@ -51,6 +51,13 @@
       <version>${log4j2-version}</version>
     </dependency>
 
+    <!-- EXCEL READ -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>5.0.0</version>
+    </dependency>
+
     <!-- testing -->
     <dependency>
       <groupId>org.apache.camel</groupId>

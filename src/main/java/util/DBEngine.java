@@ -1,5 +1,7 @@
 package util;
 
+import org.apache.poi.ss.usermodel.Cell;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -23,8 +25,8 @@ public class DBEngine {
         }
     }
 
-//    private Object getCellValue(Cell cell) {
-//
-//    }
+    private Object getCellValue(Cell cell) {
+        return cell;
+    }
 }
 
