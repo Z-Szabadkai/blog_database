@@ -10,11 +10,11 @@ public class User {
     public User() {
     }
 
-    public User(String name, byte[] avatar) {}
+    public User(String userName, byte[] avatar) {}
 
     @Setter
     @Getter
-    public String name;
+    public String userName;
 
     @Setter
     @Getter

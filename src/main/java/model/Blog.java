@@ -3,8 +3,6 @@ package model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 public class Blog extends User {
 
     @Getter
@@ -13,23 +11,17 @@ public class Blog extends User {
 
     @Getter
     @Setter
-    public String title;
+    public String blogName;
 
-    @Getter
-    @Setter
-    public Date published;
-
-    @Getter
-    @Setter
-    public boolean canComment;
-
-
-    public Blog(String name, byte[] avatar, long id, String title, Date published, boolean canComment) {
-        super(name, avatar);
+    public Blog (long id, String blogName) {
         this.id = id;
-        this.title = title;
-        this.published = published;
-        this.canComment = canComment;
+        this.blogName = blogName;
+    }
+
+    public Blog (String userName, byte[] avatar, long id, String blogName) {
+        super(userName, avatar);
+        this.id = id;
+        this.blogName = blogName;
     }
 
 
