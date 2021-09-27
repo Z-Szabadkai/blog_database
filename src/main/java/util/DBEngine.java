@@ -1,10 +1,11 @@
 package util;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Workbook;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class DBEngine {
@@ -23,10 +24,6 @@ public class DBEngine {
             e.printStackTrace();
             return null;
         }
-    }
-
-    private Object getCellValue(Cell cell) {
-        return cell;
     }
 }
 

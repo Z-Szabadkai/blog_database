@@ -23,6 +23,4 @@ public class Blog extends User {
         this.id = id;
         this.blogName = blogName;
     }
-
-
 }
