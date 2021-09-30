@@ -7,7 +7,7 @@ public class BlogTemplate {
 
     @Getter
     @Setter
-    public String templateName;
+    private String templateName;
 
     public enum templateStyle {
         BOOK,
@@ -29,5 +29,5 @@ public class BlogTemplate {
 
     @Getter
     @Setter
-    public byte[] templateBackground;
+    private byte[] templateBackground;
 }

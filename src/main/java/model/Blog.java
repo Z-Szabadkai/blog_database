@@ -7,11 +7,11 @@ public class Blog extends User {
 
     @Getter
     @Setter
-    public long id;
+    private long id;
 
     @Getter
     @Setter
-    public String blogName;
+    private String blogName;
 
     public Blog (long id, String blogName) {
         this.id = id;

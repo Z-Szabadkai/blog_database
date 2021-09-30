@@ -14,25 +14,25 @@ public class User {
 
     @Setter
     @Getter
-    public String userName;
+    private String userName;
 
     @Setter
     @Getter
-    public Privilege permission;
+    private Privilege permission;
 
     @Setter
     @Getter
-    public String e_mail;
+    private String e_mail;
 
     @Setter
-    public String password;
-
-    @Setter
-    @Getter
-    public byte[] avatar;
+    private String password;
 
     @Setter
     @Getter
-    public Date registration_date;
+    private byte[] avatar;
+
+    @Setter
+    @Getter
+    private Date registration_date;
 
 }

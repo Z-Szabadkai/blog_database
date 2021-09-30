@@ -10,23 +10,23 @@ public class Post extends Blog {
 
     @Getter
     @Setter
-    public String title;
+    private String title;
 
     @Getter
     @Setter
-    public String content;
+    private String content;
 
     @Getter
     @Setter
-    public List<String> tags;
+    private List<String> tags;
 
     @Getter
     @Setter
-    public Date published;
+    private Date published;
 
     @Getter
     @Setter
-    public boolean canComment;
+    private boolean canComment;
 
     public Post(long id, String blogName, String title, String content, List<String> tags, Date published, boolean canComment) {
         super(id, blogName);
