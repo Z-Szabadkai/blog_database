@@ -2,6 +2,7 @@ package model;
 
 public enum Privilege {
 
+    LURKER,
     USER,
     MODERATOR,
     ADMIN;
@@ -12,7 +13,7 @@ public enum Privilege {
                 return enduser;
             }
         }
-        return Privilege.USER;
+        return Privilege.LURKER;
     }
 
     public int getDBIndex() {

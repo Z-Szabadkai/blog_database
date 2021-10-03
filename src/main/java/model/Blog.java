@@ -13,14 +13,20 @@ public class Blog extends User {
     @Setter
     private String blogName;
 
+    @Getter
+    private BlogTemplate template;
+
+    public Blog() {
+    }
+
     public Blog (long id, String blogName) {
         this.id = id;
         this.blogName = blogName;
     }
 
-    public Blog (String userName, byte[] avatar, long id, String blogName) {
+    public Blog (String userName, byte[] avatar, String blogName, BlogTemplate template) {
         super(userName, avatar);
-        this.id = id;
         this.blogName = blogName;
+        this.template = template;
     }
 }

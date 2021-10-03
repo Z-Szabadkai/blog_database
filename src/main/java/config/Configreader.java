@@ -31,7 +31,6 @@ public class Configreader {
 
     private void exportToXLS () throws IOException {
         Connection connect = connectToDB();
-        Workbook workbook = WorkbookFactory.create(new FileInputStream(xlsPath));
         Workbook writeWorkbook = new HSSFWorkbook();
         Sheet sheet = writeWorkbook.createSheet("Blog User");
 
@@ -39,14 +38,14 @@ public class Configreader {
             String query = "SELECT * FROM blog";
             Statement statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
-            ResultSetMetaData rsmd = resultSet.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+            int columnsNumber = resultSetMetaData.getColumnCount();
 
             Row row = sheet.createRow(0);
 
             for(int col=0 ;col < columnsNumber;col++) {
                 Cell newpath = row.createCell(col);
-                newpath.setCellValue(rsmd.getColumnLabel(col+1));
+                newpath.setCellValue(resultSetMetaData.getColumnLabel(col+1));
             }
             while(resultSet.next()) {
                 Row desRow = sheet.createRow(resultSet.getRow());
@@ -54,7 +53,7 @@ public class Configreader {
                     Cell newpath = desRow.createCell(col);
                     newpath.setCellValue(resultSet.getString(col+1));
                 }
-                FileOutputStream fileOut = new FileOutputStream("C:\\Users\\CEPL\\Desktop\\test.xls");
+                FileOutputStream fileOut = new FileOutputStream(xlsPath);
                 writeWorkbook.write(fileOut);
                 fileOut.close();
             }

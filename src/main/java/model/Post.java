@@ -18,7 +18,7 @@ public class Post extends Blog {
 
     @Getter
     @Setter
-    private List<String> tags;
+    private String[] tags;
 
     @Getter
     @Setter
@@ -28,7 +28,19 @@ public class Post extends Blog {
     @Setter
     private boolean canComment;
 
-    public Post(long id, String blogName, String title, String content, List<String> tags, Date published, boolean canComment) {
+    public Post() {
+
+    }
+
+    public Post(String title, String content, String[] tags, boolean canComment) {
+        this();
+        this.title = title;
+        this.content = content;
+        this.tags = tags;
+        this.canComment = canComment;
+    }
+
+    public Post(long id, String blogName, String title, String content, String[] tags, Date published, boolean canComment) {
         super(id, blogName);
         this.title = title;
         this.content = content;
