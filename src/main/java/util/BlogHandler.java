@@ -6,8 +6,19 @@ import java.util.*;
 
 public class BlogHandler {
 
+    List<String> users = new ArrayList<>();
+
     public User createNewUser() {
-        return null;
+        User user = new User();
+
+        System.out.println("What is your username?");
+        String userName;
+        do {
+            System.out.println("That name is already taken, choose another one please!");
+            userName = getScanner().next();
+        }
+        while (!users.contains(userName));
+        return user;
     }
 
     public Blog createNewBlog (String userName, byte[] avatar, String blogTitle, BlogTemplate template) {
@@ -58,7 +69,8 @@ public class BlogHandler {
         return null;
     }
 
-    public List<String> getUserData() {
+    public List<String> getUserData(long id) {
+
         return null;
     }
 
