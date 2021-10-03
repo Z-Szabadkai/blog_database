@@ -18,6 +18,21 @@ public class BlogHandler {
             userName = getScanner().next();
         }
         while (!users.contains(userName));
+        user.setUserName(userName);
+
+        user.setPermission(Privilege.USER);
+
+        System.out.println("Please type in your e-mail address!");
+        String email = getScanner().next();
+        user.setE_mail(email);
+
+        System.out.println("Please add your password! (Hint: don't let anybody see");
+        String pw = getScanner().next();
+        user.setPassword(pw);
+
+        Date date = new Date();
+        user.setRegistration_date(date);
+
         return user;
     }
 
