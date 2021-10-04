@@ -33,6 +33,7 @@ public class User {
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
+            System.out.println("Error");
         }
         return String.valueOf(stringBuilder);
     }
