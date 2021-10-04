@@ -10,8 +10,6 @@ public class User {
     public User() {
     }
 
-    public User(String userName, byte[] avatar) {}
-
     @Setter
     @Getter
     private String userName;
@@ -26,6 +24,18 @@ public class User {
 
     @Setter
     private String password;
+
+    public String getPassword() {
+        StringBuilder stringBuilder = null;
+        try {
+            for (int i = 0; i < password.length(); i++) {
+                stringBuilder.append("x");
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return String.valueOf(stringBuilder);
+    }
 
     @Setter
     @Getter

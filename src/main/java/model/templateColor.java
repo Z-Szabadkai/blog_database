@@ -17,4 +17,8 @@ public enum templateColor {
         }
         return templateColor.BLACK;
     }
+
+    public int getDBIndex() {
+        return ordinal() + 1;
+    }
 }

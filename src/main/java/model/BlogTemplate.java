@@ -5,9 +5,6 @@ import lombok.Setter;
 
 public class BlogTemplate {
 
-    @Getter
-    @Setter
-    private String templateName;
 
     @Getter
     @Setter
@@ -25,8 +22,7 @@ public class BlogTemplate {
 
     }
 
-    public BlogTemplate(String templateName, byte[] templateBackground, templateStyle style, templateColor color) {
-        this.templateName = templateName;
+    public BlogTemplate(byte[] templateBackground, templateStyle style, templateColor color) {
         this.templateBackground = templateBackground;
         this.style = style;
         this.color = color;
