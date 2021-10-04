@@ -13,8 +13,17 @@ public class BlogTemplate {
     @Setter
     private byte[] templateBackground;
 
+    @Getter
+    @Setter
     private templateStyle style;
+
+    @Getter
+    @Setter
     private templateColor color;
+
+    public BlogTemplate() {
+
+    }
 
     public BlogTemplate(String templateName, byte[] templateBackground, templateStyle style, templateColor color) {
         this.templateName = templateName;

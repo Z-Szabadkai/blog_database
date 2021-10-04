@@ -14,6 +14,7 @@ public class Blog extends User {
     private String blogName;
 
     @Getter
+    @Setter
     private BlogTemplate template;
 
     public Blog() {

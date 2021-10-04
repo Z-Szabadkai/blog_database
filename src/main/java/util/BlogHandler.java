@@ -2,13 +2,15 @@ package util;
 
 import model.*;
 
+import java.io.FileInputStream;
 import java.util.*;
 
 public class BlogHandler {
 
-    List<String> users = new ArrayList<>();
+    List<User> users = new ArrayList<>();
+    List<Blog> blogs = new ArrayList<>();
 
-    public User createNewUser() {
+    public void createNewUser() {
         User user = new User();
 
         System.out.println("What is your username?");
@@ -33,11 +35,31 @@ public class BlogHandler {
         Date date = new Date();
         user.setRegistration_date(date);
 
-        return user;
+        users.add(user);
+        System.out.println("Profile successfully created!");
     }
 
-    public Blog createNewBlog (String userName, byte[] avatar, String blogTitle, BlogTemplate template) {
-        return new Blog(userName, avatar, blogTitle, template);
+    public void createNewBlog () {
+        Blog blog = new Blog();
+        BlogTemplate blogTemplate = new BlogTemplate();
+
+        System.out.println("What is the title of the blog?");
+        String title = getScanner().next();
+        blog.setBlogName(title);
+
+        System.out.println("Choose a template");
+        String name = getScanner().next();
+        blogTemplate.setTemplateName(name);
+        byte[] background = new byte[0];
+        blogTemplate.setTemplateBackground(background);
+        templateStyle ts = templateStyle.valueOf(getScanner().next());
+        blogTemplate.setStyle(ts);
+        templateColor tc = templateColor.valueOf(getScanner().next());
+        blogTemplate.setColor(tc);
+
+        blog.setTemplate(blogTemplate);
+
+        blogs.add(blog);
     }
 
     public Post createNewPost (String title) {
@@ -84,9 +106,8 @@ public class BlogHandler {
         return null;
     }
 
-    public List<String> getUserData(long id) {
-
-        return null;
+    public List<User> getUsers() {
+        return users;
     }
 
     private Scanner getScanner() {
