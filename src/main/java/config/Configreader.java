@@ -29,38 +29,38 @@ public class Configreader {
         }
     }
 
-    private void exportToXLS () throws IOException {
-        Connection connect = connectToDB();
-        Workbook writeWorkbook = new HSSFWorkbook();
-        Sheet sheet = writeWorkbook.createSheet("Blog User");
-
-        try{
-            String query = "SELECT * FROM blog";
-            Statement statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-            int columnsNumber = resultSetMetaData.getColumnCount();
-
-            Row row = sheet.createRow(0);
-
-            for(int col=0 ;col < columnsNumber;col++) {
-                Cell newpath = row.createCell(col);
-                newpath.setCellValue(resultSetMetaData.getColumnLabel(col+1));
-            }
-            while(resultSet.next()) {
-                Row desRow = sheet.createRow(resultSet.getRow());
-                for(int col=0 ;col < columnsNumber;col++) {
-                    Cell newpath = desRow.createCell(col);
-                    newpath.setCellValue(resultSet.getString(col+1));
-                }
-                FileOutputStream fileOut = new FileOutputStream(xlsPath);
-                writeWorkbook.write(fileOut);
-                fileOut.close();
-            }
-        }
-        catch (SQLException e) {
-            System.out.println("Failed to get data from database");
-        }
-    }
+//    private void exportToXLS () throws IOException {
+//        Connection connect = connectToDB();
+//        Workbook writeWorkbook = new HSSFWorkbook();
+//        Sheet sheet = writeWorkbook.createSheet("Blog User");
+//
+//        try{
+//            String query = "SELECT * FROM blog";
+//            Statement statement = connect.createStatement();
+//            ResultSet resultSet = statement.executeQuery(query);
+//            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+//            int columnsNumber = resultSetMetaData.getColumnCount();
+//
+//            Row row = sheet.createRow(0);
+//
+//            for(int col=0 ;col < columnsNumber;col++) {
+//                Cell newpath = row.createCell(col);
+//                newpath.setCellValue(resultSetMetaData.getColumnLabel(col+1));
+//            }
+//            while(resultSet.next()) {
+//                Row desRow = sheet.createRow(resultSet.getRow());
+//                for(int col=0 ;col < columnsNumber;col++) {
+//                    Cell newpath = desRow.createCell(col);
+//                    newpath.setCellValue(resultSet.getString(col+1));
+//                }
+//                FileOutputStream fileOut = new FileOutputStream(xlsPath);
+//                writeWorkbook.write(fileOut);
+//                fileOut.close();
+//            }
+//        }
+//        catch (SQLException e) {
+//            System.out.println("Failed to get data from database");
+//        }
+//    }
 }
 

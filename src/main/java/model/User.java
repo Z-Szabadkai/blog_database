@@ -3,12 +3,10 @@ package model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class User {
-
-    public User() {
-    }
 
     @Setter
     @Getter
@@ -22,8 +20,14 @@ public class User {
     @Getter
     private String e_mail;
 
-    @Setter
     private String password;
+
+    public void setPassword(String password) {
+        if (password.length() > 6) {
+            this.password = password;
+        }
+        System.out.println("Password is too short!");
+    }
 
     public String getPassword() {
         StringBuilder stringBuilder = null;
@@ -44,6 +48,16 @@ public class User {
 
     @Setter
     @Getter
-    private Date registration_date;
+    private LocalDateTime registration_date;
+
+    @Getter
+    @Setter
+    private List<Blog> blogList;
+
+    public User() {
+    }
+
+    public User(String userName, Privilege permission, String email, String password, byte[] avatar, LocalDateTime registration_date) {
+    }
 
 }

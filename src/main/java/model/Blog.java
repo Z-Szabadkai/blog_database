@@ -3,11 +3,13 @@ package model;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Blog extends User {
+import java.util.List;
+
+public class Blog {
 
     @Getter
     @Setter
-    private long id;
+    private long blogId;
 
     @Getter
     @Setter
@@ -17,17 +19,19 @@ public class Blog extends User {
     @Setter
     private BlogTemplate template;
 
-    public Blog() {
-    }
+    @Getter
+    @Setter
+    public List<Content> postList;
 
-    public Blog (long id, String blogName) {
-        this.id = id;
-        this.blogName = blogName;
-    }
+    public Blog() {}
 
-    public Blog (String userName, byte[] avatar, String blogName, BlogTemplate template) {
-        super(userName, avatar);
+    public Blog (String blogName, BlogTemplate template) {
         this.blogName = blogName;
         this.template = template;
+    }
+
+    public Blog (long blogId, String blogName, BlogTemplate template) {
+        this(blogName, template);
+        this.blogId= blogId;
     }
 }

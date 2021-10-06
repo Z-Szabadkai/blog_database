@@ -9,7 +9,7 @@ public class BlogHandler {
 
     List<Blog> blogs = new ArrayList<>();
 
-    public void createNewBlog () {
+    public void createBlog (User user) {
         Blog blog = new Blog();
         BlogTemplate blogTemplate = new BlogTemplate();
 
@@ -30,13 +30,13 @@ public class BlogHandler {
         blogs.add(blog);
     }
 
-    public Post createNewPost (String title) {
-        Post post = new Post();
+    public Content createNewPost (String title) {
+        Content post = new Content();
         post.setTitle(title);
 
         System.out.println("What's on your mind?");
         String content = GetScanner.newScanner();
-        post.setContent(content);
+        post.setPost(content);
 
         System.out.println("Please add some tags!");
         post.setTags(addTags());
@@ -58,7 +58,7 @@ public class BlogHandler {
         return tags;
     }
 
-    public String createComment(Post post, User user, String comment) {
+    public String createComment(Content post, User user, String comment) {
         Map<String, String> commentList = new HashMap();
         if ((post.isCanComment()) && (!user.getPermission().equals(Privilege.LURKER)))
             comment = GetScanner.newScanner();
