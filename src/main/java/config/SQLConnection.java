@@ -7,7 +7,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.Properties;
 
-public class Configreader {
+public class SQLConnection {
 
     String xlsPath = "src/main/resources/UserDatabase.xls";
     String userPath = "user, u, enduser";

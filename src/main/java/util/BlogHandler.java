@@ -1,68 +1,40 @@
 package util;
 
-import config.GetScanner;
 import model.*;
 
 import java.util.*;
 
 public class BlogHandler {
 
-    List<Blog> blogs = new ArrayList<>();
+    public void createNewBlog (User user, Blog blog) {
+        List<Blog> userBlog = user.getBlogList();
 
-    public void createBlog (User user) {
-        Blog blog = new Blog();
-        BlogTemplate blogTemplate = new BlogTemplate();
-
-        System.out.println("What is the title of the blog?");
-        String title = GetScanner.newScanner();
-        blog.setBlogName(title);
-
-        System.out.println("Choose a template");
-        byte[] background = new byte[0];
-        blogTemplate.setTemplateBackground(background);
-        templateStyle ts = templateStyle.valueOf(GetScanner.newScanner());
-        blogTemplate.setStyle(ts);
-        templateColor tc = templateColor.valueOf(GetScanner.newScanner());
-        blogTemplate.setColor(tc);
-
-        blog.setTemplate(blogTemplate);
-
-        blogs.add(blog);
-    }
-
-    public Content createNewPost (String title) {
-        Content post = new Content();
-        post.setTitle(title);
-
-        System.out.println("What's on your mind?");
-        String content = GetScanner.newScanner();
-        post.setPost(content);
-
-        System.out.println("Please add some tags!");
-        post.setTags(addTags());
-
-        System.out.println("Would you like others to comment on it? Y/N");
-        String comment = GetScanner.newScanner();
-        if (comment.equalsIgnoreCase("y")) {
-            post.setCanComment(true);
+        if ((!userBlog.contains(blog)) && (!user.getPermission().equals(Privilege.LURKER))) {
+            userBlog.add(blog);
+            user.setBlogList(userBlog);
+        } else {
+            System.out.println("This blog already exists!");
         }
-        return post;
     }
 
-    public String[] addTags() {
-        String[] tags = new String[5];
-        for (int t = 0; t < tags.length-1; t++) {
-            String tag = GetScanner.newScanner();
-            tags[t] = tag;
+    public void createNewPost (User user, Blog blog, Content content) {
+        List<Content> userContent = blog.getPostList();
+
+        for (Blog b : user.getBlogList()) {
+            if (b.equals(blog)) {
+                if (!userContent.contains(content))
+                userContent.add(content);
+                blog.setPostList(userContent);
+            }
         }
-        return tags;
     }
 
-    public String createComment(Content post, User user, String comment) {
-        Map<String, String> commentList = new HashMap();
-        if ((post.isCanComment()) && (!user.getPermission().equals(Privilege.LURKER)))
-            comment = GetScanner.newScanner();
-            commentList.put(user.getUserName(), comment);
-        return null;
+    public void createNewComment (Content content, User user, Comment comment) {
+        List<Comment> userComment = content.getCommentList();
+
+        if (!user.getPermission().equals(Privilege.LURKER)) {
+            userComment.add(comment);
+            content.setCommentList(userComment);
+        }
     }
 }
