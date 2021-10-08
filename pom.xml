@@ -31,13 +31,6 @@
 
   <dependencies>
 
-    <!--For working with Microsoft Documents-->
-    <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi</artifactId>
-      <version>5.0.0</version>
-    </dependency>
-
     <!-- For helper utilities regarding java.lang.API -->
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -53,7 +46,7 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- For clean and concise code -->
+    <!-- For clean and concise fields in the model classes -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>

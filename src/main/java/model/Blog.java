@@ -17,9 +17,11 @@ public class Blog {
 
     @Getter
     @Setter
-    private List<Content> postList;
+    private List<Content> contentList;
 
-    public Blog(String title) {}
+    public Blog(String title) {
+        this.title = title;
+    }
 
     public Blog (String title, BlogTemplate template) {
         this.title = title;

@@ -26,5 +26,6 @@ public class Comment {
         this.comment_post = comment_post;
         this.comment_date = comment_date;
     }
+
 }
 

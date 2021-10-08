@@ -8,10 +8,6 @@ import java.util.List;
 
 public class User {
 
-
-    //TODO not registered then Lurker
-
-
     @Setter
     @Getter
     private long userId;
@@ -22,7 +18,7 @@ public class User {
 
     @Setter
     @Getter
-    private Privilege privilege;
+    private Privilege privilege = Privilege.LURKER;
 
     @Setter
     @Getter
@@ -31,8 +27,9 @@ public class User {
     @Setter
     private String password;
 
-
-    /* This method takes the given password (which must be at least 6 characters long) as an input, and hides it.      */
+    /*
+    This method takes the given password (which must be at least 6 characters long) as an input, and hides it.
+    */
 
     public String getPassword() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -68,7 +65,21 @@ public class User {
     public User() {
     }
 
-    public User(String name, Privilege privilege, String email, LocalDateTime registration_date) {
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String name, Privilege privilege, String email, byte[] avatar, LocalDateTime registration_date) {
+        this.name = name;
+        this.privilege = privilege;
+        this.email = email;
+        this.avatar = avatar;
+        this.registration_date = registration_date;
+    }
+
+    public User(Long userId, String name, Privilege privilege, String email, String password, byte[] avatar, LocalDateTime registration_date) {
         this.name = name;
         this.privilege = privilege;
         this.email = email;

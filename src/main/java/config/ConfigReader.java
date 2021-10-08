@@ -1,15 +1,5 @@
 package config;
 
-import lombok.Getter;
-import lombok.Setter;
-import model.BlogTemplate;
-import model.Content;
-
-import java.security.Key;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-
 public class ConfigReader {
 
     /* These are for global variables for ease of access.
@@ -25,7 +15,7 @@ public class ConfigReader {
     This method is for the "SELECT" type commands for the SQL database.
      */
 
-    public static String selectSQLDB (String column, String db, String filter) {
+    public static String selectSQLDB (String column, String db, String filter, String search) {
         StringBuilder result = new StringBuilder(sqlSelect);
         if (column != null) {
             result.append(column).append(sqlFrom).append(db);
@@ -33,7 +23,7 @@ public class ConfigReader {
             result.append("*" + sqlFrom).append(db);
         }
         if (filter != null) {
-            result.append(sqlWhere);
+            result.append(sqlWhere).append(search).append("=");
         }
         return result.toString();
     }

@@ -1,11 +1,8 @@
 package service;
 
 import config.ConfigReader;
-import model.User;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
+import model.*;
 
-import java.io.*;
 import java.sql.*;
 import java.util.Properties;
 
@@ -35,22 +32,27 @@ public class ConnectToOuterDB {
      */
 
     public boolean addUsersToDB(User user) {
-        Connection connect = connectToSQL();
-        String query = ConfigReader.intoSQLDB("user");
+        if ((user.getName() == null) || (user.getEmail() == null) || (user.getPassword() == null)) {
+            System.out.println("Can only add registered users!");
+        } else {
 
-        try {
-            PreparedStatement ps = connect != null ? connect.prepareStatement(query) : null;
-            ps.setString(1, user.getName());
-            ps.setInt(2, user.getPrivilege().getDBIndex());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPassword());
-            ps.setDate(5, java.sql.Date.valueOf(user.getRegistration_date().toLocalDate()));
-            return true;
+            Connection connect = connectToSQL();
+            String query = ConfigReader.intoSQLDB("user");
 
-        } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
-            return false;
+            try {
+                PreparedStatement ps = connect != null ? connect.prepareStatement(query) : null;
+                ps.setString(1, user.getName());
+                ps.setInt(2, user.getPrivilege().getDBIndex());
+                ps.setString(3, user.getEmail());
+                ps.setString(4, user.getPassword());
+                ps.setDate(5, java.sql.Date.valueOf(user.getRegistration_date().toLocalDate()));
+                return true;
+
+            } catch (SQLException | NullPointerException e) {
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 }
 

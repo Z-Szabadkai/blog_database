@@ -13,92 +13,84 @@ public class DBEngine {
 
     Connection connect = ConnectToOuterDB.connectToSQL();
 
-    public List<Content> readBlog(User user) {
-        List<Blog> userBlog = user.getBlogList();
-        List<Content> userContent = new ArrayList<>();
-
-        if (userBlog.size() == 1) {
-            userContent = userBlog.get(0).getPostList();
-        } else {
-
+    public boolean registerUser(User user) {
+        if ((user.getName() == null) || (user.getEmail() == null) || (user.getPassword() == null)) {
+            return false;
         }
-        return userContent;
-    }
-
-
-    public User findUser (String name) {
-        String query = ConfigReader.selectSQLDB(null, "enduser", "w") + "name = ?";
-        User user = null;
-
-        try {
-            PreparedStatement ps = connect.prepareStatement(query);
-            ps.setString(1, name);
-            ResultSet resultSet = ps.executeQuery();
-
-            while (resultSet.next()) {
-                long id = resultSet.getLong("user_id");
-                String userName = resultSet.getString("name");
-                String privilegeDB = resultSet.getString("privilege").toUpperCase();
-                Privilege privilege = Privilege.valueOf(privilegeDB);
-                String email = resultSet.getString("email");
-                LocalDateTime date = resultSet.getTimestamp("registration_date").toLocalDateTime();
-
-                user = new User(userName, privilege, email, date);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
+        user.setPrivilege(Privilege.USER);
+        return true;
     }
 
     /*
-    This method is made to give back all the users with their own blogs.
+    This method was made to list all the information regarding an user.
      */
 
-    public List<User> listAllUsers (User endUser) throws SQLException {
-        String query = ConfigReader.selectSQLDB(null, "enduser", null);
-        List<User> userList = new ArrayList<>();
-        PreparedStatement statement = connect.prepareStatement(query);
+    public User getUserData(User user) {
+        String query = ConfigReader.selectSQLDB(null, "enduser", "w", "name") + user.getName();
+        User result = null;
 
-        if (!endUser.getPrivilege().equals(Privilege.LURKER)) {
+        try {
+            Statement statement = connect.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
 
-            try {
-                statement.setLong(1, Long.parseLong("userId"));
-                ResultSet resultSet = statement.executeQuery();
-                if (resultSet.next()) {
-                    long userId = resultSet.getLong("user_id");
-                    String name = resultSet.getString("name");
-                    String privilegeDB = resultSet.getString("privilege").toUpperCase();
-                    Privilege privilege = Privilege.valueOf(privilegeDB);
-                    String email = resultSet.getString("email");
-                    LocalDateTime date = resultSet.getTimestamp("registration_date").toLocalDateTime();
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String privilegeDB = resultSet.getString("privilege").toUpperCase();
+                Privilege privilege = Privilege.valueOf(privilegeDB);
+                String email = resultSet.getString("email");
+                byte[] avatar = resultSet.getBytes("avatar");
+                LocalDateTime reg_date = resultSet.getTimestamp("registration_date").toLocalDateTime();
 
-                    User user = new User(name, privilege, email, date);
-                    user.setBlogList(findBlogsByUser(userId));
-                    userList.add(user);
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+                result = new User(name, privilege, email, avatar, reg_date);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /*
+    This method was made to list all the users in the database.
+     */
+
+    public List<User> listAllUserData (Privilege privilege) {
+        String query = ConfigReader.selectSQLDB(null, "enduser", "w", "privilege") + privilege;
+        List<User> userList = new ArrayList<>();
+
+        try {
+            Statement statement = connect.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                long userId = resultSet.getLong("user_id");
+                String name = resultSet.getString("name");
+                String permissionDB = resultSet.getString("privilege").toUpperCase();
+                Privilege permission = Privilege.valueOf(permissionDB);
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                byte[] avatar = resultSet.getBytes("avatar");
+                LocalDateTime reg_date = resultSet.getTimestamp("registration_date").toLocalDateTime();
+
+                User user = new User(userId, name, permission, email, password, avatar, reg_date);
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return userList;
     }
 
     /*
-    This method is for searching a blog by name.
+    This method was made to search a blog by name.
      */
 
-    public Blog findBlogByName (String name){
-        String query = ConfigReader.selectSQLDB(null, "blog", "w") + "title = ?";
+    public Blog findBlogByName (String name) {
+        String query = ConfigReader.selectSQLDB(null, "blog", "w", "title") + name;
         Blog blog = null;
 
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement(query);
-            preparedStatement.setString(1, name);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
+            Statement statement = connect.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
@@ -113,27 +105,99 @@ public class DBEngine {
     }
 
     /*
-    This method is for finding the blogs by a given user.
+    This method was made to find all the blogs by a given user.
      */
 
     public List<Blog> findBlogsByUser (long userId) {
-        String query = ConfigReader.selectSQLDB(null, "blog", "w") + "blog_creator = ?";
+        String query = ConfigReader.selectSQLDB(null, "blog", "w", "blog_creator") + userId;
 
-        List<Blog> blogs = new ArrayList<>();
+        List<Blog> blogList = new ArrayList<>();
 
         try {
-            PreparedStatement preparedStatement = connect.prepareStatement(query);
-            preparedStatement.setLong(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            Statement statement = connect.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
                 String blogName = resultSet.getString("title");
                 Blog blog = findBlogByName(blogName);
-                blogs.add(blog);
+                blogList.add(blog);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return blogs;
+        return blogList;
     }
+
+    /*
+    This method was made to find a specific blogpost.
+     */
+
+    public Content findContentByName(String content) {
+        String query = ConfigReader.selectSQLDB(null, "content", "w", "title") + content;
+        Content result = null;
+
+        try {
+            Statement statement = connect.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                result = new Content(title);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /*
+    This method was made to find all the posts of a given blog.
+     */
+
+    public List<Content> readBlog (String title) {
+        String query = ConfigReader.selectSQLDB(null, "content", "w", "blog_content") + title;
+        List<Content> contentList = new ArrayList<>();
+
+        try {
+            Statement statement = connect.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                String blogContent = resultSet.getString("blog_content");
+                Content content = findContentByName(blogContent);
+                contentList.add(content);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contentList;
+    }
+
+    /*
+    This method was made to list all the comments under a specific content.
+     */
+
+    public List<Comment> listAllComments (Content content) {
+        String query = ConfigReader.selectSQLDB(null, "comment", "w", "comment_under") + content.getContentId();
+        List<Comment> commentList = new ArrayList<>();
+
+        try {
+            Statement statement = connect.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                long commentId = resultSet.getLong("comment_id");
+                String commentPost = resultSet.getString("comment_post");
+                LocalDateTime commentDate = resultSet.getTimestamp("comment_date").toLocalDateTime();
+
+                Comment comment = new Comment(commentId, commentPost, commentDate);
+                commentList.add(comment);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

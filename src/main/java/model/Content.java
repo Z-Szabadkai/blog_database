@@ -37,7 +37,8 @@ public class Content {
     @Setter
     private List<Comment> commentList;
 
-    public Content() {
+    public Content(String title) {
+        this.title = title;
     }
 
     public Content(String title, String post, String[] tags, boolean can_comment_under) {
