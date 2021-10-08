@@ -9,11 +9,7 @@ public class Blog {
 
     @Getter
     @Setter
-    private long blogId;
-
-    @Getter
-    @Setter
-    private String blogName;
+    private String title;
 
     @Getter
     @Setter
@@ -21,17 +17,12 @@ public class Blog {
 
     @Getter
     @Setter
-    public List<Content> postList;
+    private List<Content> postList;
 
-    public Blog() {}
+    public Blog(String title) {}
 
-    public Blog (String blogName, BlogTemplate template) {
-        this.blogName = blogName;
+    public Blog (String title, BlogTemplate template) {
+        this.title = title;
         this.template = template;
-    }
-
-    public Blog (long blogId, String blogName, BlogTemplate template) {
-        this(blogName, template);
-        this.blogId= blogId;
     }
 }

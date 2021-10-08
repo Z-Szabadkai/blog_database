@@ -3,10 +3,15 @@ package model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 public class Content {
+
+    @Setter
+    @Getter
+    private long contentId;
 
     @Getter
     @Setter
@@ -22,11 +27,11 @@ public class Content {
 
     @Getter
     @Setter
-    private Date published;
+    private LocalDateTime published_date;
 
     @Getter
     @Setter
-    private boolean canComment;
+    private boolean can_comment_under;
 
     @Getter
     @Setter
@@ -35,10 +40,10 @@ public class Content {
     public Content() {
     }
 
-    public Content(String title, String post, String[] tags, boolean canComment) {
+    public Content(String title, String post, String[] tags, boolean can_comment_under) {
         this.title = title;
         this.post = post;
         this.tags = tags;
-        this.canComment = canComment;
+        this.can_comment_under = can_comment_under;
     }
 }
