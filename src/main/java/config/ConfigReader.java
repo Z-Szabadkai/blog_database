@@ -2,7 +2,7 @@ package config;
 
 public class ConfigReader {
 
-    /* These are for global variables for ease of access.
+    /* These are global variables for ease of access.
      */
 
     private static final String sqlSelect = "SELECT ";
@@ -59,6 +59,10 @@ public class ConfigReader {
         result.append(column).append(sqlValue).append(value);
         return result.toString();
     }
+
+    /*
+    This method is only for giving back an "UPDATE" SQL query in a way that is not hard coded.
+     */
 
     public static String updateSQLDB (String db, String column, String value, String filter) {
         return sqlUpdate +

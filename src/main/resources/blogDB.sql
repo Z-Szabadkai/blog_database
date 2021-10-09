@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS content (
     title VARCHAR (50) NOT NULL,
     post VARCHAR (500),
     tags VARCHAR (20),
+    post_status ENUM ('draft', 'pending', 'publish', 'future') DEFAULT 'draft',
     published_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     can_comment_under BOOL DEFAULT TRUE,
     content_creator INT UNSIGNED,

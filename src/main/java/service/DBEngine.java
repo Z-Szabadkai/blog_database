@@ -13,15 +13,6 @@ public class DBEngine {
 
     Connection connect = ConnectToOuterDB.connectToSQL();
 
-
-    public boolean registerUser(User user) {
-        if ((user.getName() == null) || (user.getEmail() == null) || (user.getPassword() == null)) {
-            return false;
-        }
-        user.setPrivilege(Privilege.USER);
-        return true;
-    }
-
     /*
     This method was made for logging in with the help of a scanner. It won't let the user call other methods without the exact credentials.
      */

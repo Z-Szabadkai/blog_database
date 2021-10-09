@@ -4,10 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public class Content {
+
+    private enum postStatus {DRAFT, PENDING, PUBLISHED, FUTURE}
 
     @Setter
     @Getter
@@ -24,6 +25,10 @@ public class Content {
     @Getter
     @Setter
     private String[] tags;
+
+    @Getter
+    @Setter
+    private postStatus status;
 
     @Getter
     @Setter
