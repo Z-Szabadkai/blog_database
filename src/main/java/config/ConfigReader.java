@@ -10,6 +10,8 @@ public class ConfigReader {
     private static final String sqlInsert = "INSERT INTO ";
     private static final String sqlWhere = " WHERE ";
     private static final String sqlValue = " VALUES ";
+    private static final String sqlUpdate = "UPDATE ";
+    private static final String sqlSet = " SET ";
 
     /*
     This method is for the "SELECT" type commands for the SQL database.
@@ -36,20 +38,34 @@ public class ConfigReader {
         String column = "";
         String value = "";
         StringBuilder result = new StringBuilder(sqlInsert);
-        if (db.equals("user")) {
-            column = "(name, privilege, email, password, avatar, registration_date)";
-            value = "(?, ?, ?, ?, ?)";
-        } else if (db.equals("blog")) {
-            column = "(blog_id, title, template, postList)";
-            value = "(?, ?, ?, ?)";
-        } else if (db.equals("content")) {
-            column = "(title, post, tags, published_date, can_comment_under)";
-            value = "(?, ?, ?, ?, ?)";
-        } else if (db.equals("comment")) {
-            column = "(comment_id, comment_creator, comment_post, comment_date)";
-            value = "(?, ?, ?, ?)";
+        switch (db) {
+            case "enduser":
+                column = "(name, privilege, email, password, avatar, registration_date)";
+                value = "(?, ?, ?, ?, ?, ?)";
+                break;
+            case "blog":
+                column = "(title, background, templatestyle, templatecolor)";
+                value = "(?, ?, ?, ?)";
+                break;
+            case "content":
+                column = "(title, post, tags, published_date, can_comment_under)";
+                value = "(?, ?, ?, ?, ?)";
+                break;
+            case "comment":
+                column = "(comment_id, comment_post, comment_date)";
+                value = "(?, ?, ?)";
+                break;
         }
         result.append(column).append(sqlValue).append(value);
         return result.toString();
+    }
+
+    public static String updateSQLDB (String db, String column, String value, String filter) {
+        return sqlUpdate +
+                db +
+                sqlSet + column + "=" +
+                "'" + value + "'" +
+                sqlWhere +
+                filter + "=";
     }
 }

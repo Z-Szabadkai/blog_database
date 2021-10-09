@@ -19,8 +19,6 @@ public class Comment {
     @Setter
     LocalDateTime comment_date;
 
-    public Comment () {}
-
     public Comment (long comment_id, String comment_post, LocalDateTime comment_date) {
         this.comment_id = comment_id;
         this.comment_post = comment_post;

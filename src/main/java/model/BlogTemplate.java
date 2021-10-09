@@ -18,10 +18,6 @@ public class BlogTemplate {
     @Setter
     private templateColor color;
 
-    public BlogTemplate() {
-
-    }
-
     public BlogTemplate(byte[] templateBackground, templateStyle style, templateColor color) {
         this.templateBackground = templateBackground;
         this.style = style;

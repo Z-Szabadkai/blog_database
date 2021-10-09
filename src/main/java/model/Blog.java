@@ -22,9 +22,4 @@ public class Blog {
     public Blog(String title) {
         this.title = title;
     }
-
-    public Blog (String title, BlogTemplate template) {
-        this.title = title;
-        this.template = template;
-    }
 }
