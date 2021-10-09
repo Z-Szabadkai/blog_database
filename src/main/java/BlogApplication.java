@@ -1,5 +1,4 @@
 import model.*;
-import util.*;
 
 public class BlogApplication {
 

@@ -26,33 +26,5 @@ public class ConnectToOuterDB {
             return null;
         }
     }
-
-    /*
-    This method is for the check of an user export.
-     */
-
-    public boolean addUsersToDB(User user) {
-        if ((user.getName() == null) || (user.getEmail() == null) || (user.getPassword() == null)) {
-            System.out.println("Can only add registered users!");
-        } else {
-
-            Connection connect = connectToSQL();
-            String query = ConfigReader.intoSQLDB("user");
-
-            try {
-                PreparedStatement ps = connect != null ? connect.prepareStatement(query) : null;
-                ps.setString(1, user.getName());
-                ps.setInt(2, user.getPrivilege().getDBIndex());
-                ps.setString(3, user.getEmail());
-                ps.setString(4, user.getPassword());
-                ps.setDate(5, java.sql.Date.valueOf(user.getRegistration_date().toLocalDate()));
-                return true;
-
-            } catch (SQLException | NullPointerException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }
 }
 

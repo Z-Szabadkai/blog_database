@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Content {
 
-    private enum postStatus {DRAFT, PENDING, PUBLISHED, FUTURE}
+    public enum postStatus {DRAFT, PENDING, PUBLISHED, FUTURE}
 
     @Setter
     @Getter
@@ -46,10 +46,12 @@ public class Content {
         this.title = title;
     }
 
-    public Content(String title, String post, String[] tags, boolean can_comment_under) {
+    public Content(String title, String post, String[] tags, postStatus status, LocalDateTime published_date, boolean can_comment_under) {
         this.title = title;
         this.post = post;
         this.tags = tags;
+        this.status = status;
+        this.published_date = published_date;
         this.can_comment_under = can_comment_under;
     }
 }
